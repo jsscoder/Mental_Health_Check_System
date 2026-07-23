@@ -46,8 +46,7 @@ def greet():
 def predict(data: StudentData):
    country_group = data.country if data.country in top_countries else "Other"
 
-   # IMPORTANT: The columns are ordered and cased exactly as expected by
-   # the pipeline's 'feature_names_in_' attribute[cite: 2].
+   # The columns now perfectly match the new model (without target leakage)
    input_row = pd.DataFrame([{
        'Study_Hours'             : data.study_hours,
        'Age'                     : data.age,
@@ -55,7 +54,6 @@ def predict(data: StudentData):
        'Daily_Unlocks'           : data.daily_unlocks,
        'Physical_Activity_Hours' : data.physical_activity_hours,
        'Sleep_Hours_Per_Night'   : data.sleep_hours_per_night,
-       'Mental_Health_Score'     : 0.0, # Required because the model was trained with the target in X[cite: 2]
        'Stress_Level'            : data.stress_level,
        'Gender'                  : data.gender,
        'Academic_Level'          : data.academic_level,

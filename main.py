@@ -11,7 +11,13 @@ model = joblib.load('mental_health_pipeline.pkl')
 top_countries = ['Australia', 'Canada', 'France', 'Germany', 'India', 'Mexico', 'Other', 'Turkey', 'UK', 'USA']
 
 app = FastAPI()
+# Add this import at the top of your file
+from fastapi.responses import FileResponse
 
+# Replace your old @app.get('/') function with this:
+@app.get('/')
+def serve_ui():
+    return FileResponse('index.html')
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

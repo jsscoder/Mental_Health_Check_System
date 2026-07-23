@@ -1,0 +1,61 @@
+# =========================
+# Virtual Environments
+# =========================
+my_env/
+.venv/
+venv/
+env/
+
+# =========================
+# Python & FastAPI
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+*.log
+
+# =========================
+# Machine Learning & Data
+# =========================
+# Ignore datasets to save space
+*.csv
+*.xlsx
+*.json
+*.sqlite
+*.db
+
+# NOTE: We are intentionally NOT ignoring *.pkl here
+# because Render needs your mental_health_pipeline.pkl file to run the FastAPI app!
+
+# =========================
+# Environment Variables & Secrets
+# =========================
+.env
+.env.*
+*.pem
+*.key
+
+# =========================
+# Package Manager caches (uv / pip)
+# =========================
+.uv/
+.cache/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# =========================
+# IDEs and Editors
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+__pycache__/
+
+# =========================
+# Operating System Files
+# =========================
+.DS_Store
+Thumbs.db
+Desktop.ini

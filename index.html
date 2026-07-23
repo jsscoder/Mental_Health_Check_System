@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mental Health Signal — Student Wellness Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   TOKENS — light (default)
+   ========================================================= */
+:root {
+  --gray-25:  #FCFCFD;
+  --gray-50:  #F9FAFB;
+  --gray-100: #F3F4F6;
+  --gray-150: #ECEEF1;
+  --gray-200: #E4E7EB;
+  --gray-300: #D1D6DC;
+  --gray-400: #9AA4B2;
+  --gray-500: #6B7480;
+  --gray-600: #4B5563;
+  --gray-700: #374151;
+  --gray-900: #10141B;
+
+  --surface:  #FFFFFF;
+
+  --blue-50:  #EEF2FF;
+  --blue-100: #E0E7FF;
+  --blue-500: #3457D5;
+  --blue-600: #2A46B8;
+  --blue-700: #21379A;
+
+  --green-50: #ECFDF3;
+  --green-600:#0F8A4B;
+  --green-700:#0A6B3A;
+
+  --amber-50: #FFF8EB;
+  --amber-600:#B45C09;
+  --amber-700:#8A4707;
+
+  --red-50:   #FEF1F1;
+  --red-600:  #C21A2C;
+  --red-700:  #9E1424;
+
+  --font-body: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --shadow-xs: 0 1px 2px rgba(16,20,27,0.04);
+  --shadow-sm: 0 1px 2px rgba(16,20,27,0.04), 0 4px 10px -4px rgba(16,20,27,0.06);
+  --shadow-md: 0 2px 4px rgba(16,20,27,0.04), 0 12px 24px -10px rgba(16,20,27,0.10);
+}
+
+/* =========================================================
+   TOKENS — dark
+   ========================================================= */
+html[data-theme="dark"] {
+  --gray-25:  #0E1116;
+  --gray-50:  #0B0D12;
+  --gray-100: #1B2029;
+  --gray-150: #232933;
+  --gray-200: #2C333F;
+  --gray-300: #3E4756;
+  --gray-400: #7C8798;
+  --gray-500: #98A2B3;
+  --gray-600: #B4BDCB;
+  --gray-700: #CDD4DD;
+  --gray-900: #F2F4F7;
+
+  --surface:  #141822;
+
+  --blue-50:  #16213D;
+  --blue-100: #1E2B4E;
+  --blue-500: #5B82F0;
+  --blue-600: #4A6FE0;
+  --blue-700: #7C9BF5;
+
+  --green-50: #0E2A1C;
+  --green-600:#3ECF8E;
+  --green-700:#5FE0A4;
+
+  --amber-50: #2E2311;
+  --amber-600:#F0A93A;
+  --amber-700:#F4BD63;
+
+  --red-50:   #2E1417;
+  --red-600:  #F0596B;
+  --red-700:  #F47C8B;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3), 0 4px 14px -4px rgba(0,0,0,0.45);
+  --shadow-md: 0 2px 4px rgba(0,0,0,0.3), 0 14px 28px -10px rgba(0,0,0,0.5);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; }
+
+body {
+  margin: 0;
+  background: var(--gray-50);
+  color: var(--gray-900);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  font-size: 14.5px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+.site-header {
+  padding: 56px 24px 28px;
+  border-bottom: 1px solid var(--gray-150);
+  background: var(--gray-25);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.header-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+.header-text { flex: 1; min-width: 0; }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--blue-600);
+  margin-bottom: 14px;
+}
+.eyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blue-500);
+}
+
+.title {
+  font-weight: 800;
+  font-size: clamp(1.7rem, 3.2vw, 2.35rem);
+  line-height: 1.2;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  color: var(--gray-900);
+}
+.title em { font-style: normal; color: var(--blue-600); }
+
+.subtitle {
+  max-width: 560px;
+  font-size: 14.5px;
+  color: var(--gray-500);
+  margin: 0;
+}
+
+/* theme toggle */
+.theme-toggle {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-700);
+  background: var(--surface);
+  border: 1px solid var(--gray-300);
+  border-radius: 100px;
+  padding: 8px 14px 8px 10px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.theme-toggle:hover { border-color: var(--gray-400); }
+.theme-toggle-icon { font-size: 14px; line-height: 1; }
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+.layout {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.panel {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--gray-150);
+  transition: border-color 0.2s ease;
+}
+.panel-head h2 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--gray-900);
+}
+.panel-head span {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--gray-400);
+}
+
+.form-panel { padding: 0 0 8px; }
+.form-body { padding: 8px 28px 24px; }
+
+.result-panel {
+  position: sticky;
+  top: 24px;
+}
+
+/* =========================================================
+   FORM
+   ========================================================= */
+fieldset.group {
+  border: none;
+  margin: 0;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--gray-150);
+  transition: border-color 0.2s ease;
+}
+fieldset.group:last-of-type { border-bottom: none; padding-bottom: 4px; }
+
+legend {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  color: var(--gray-700);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0;
+  margin-bottom: 16px;
+}
+
+.legend-index {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--gray-500);
+  background: var(--gray-100);
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid { display: grid; gap: 16px; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+.field { display: flex; flex-direction: column; gap: 6px; position: relative; }
+.field-span { grid-column: 1 / -1; }
+
+label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--gray-600);
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--gray-900);
+  background: var(--surface);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  padding: 9px 11px;
+  width: 100%;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease, background-color 0.2s ease, color 0.2s ease;
+  appearance: none;
+}
+input::placeholder { color: var(--gray-400); }
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7480' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 11px center;
+  padding-right: 30px;
+  cursor: pointer;
+}
+select option { background: var(--surface); color: var(--gray-900); }
+
+input:hover, select:hover { border-color: var(--gray-400); }
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--blue-500);
+  box-shadow: 0 0 0 3px var(--blue-100);
+}
+input:focus-visible, select:focus-visible, button:focus-visible {
+  outline: 2px solid var(--blue-500);
+  outline-offset: 2px;
+}
+
+.field.field-error input,
+.field.field-error select {
+  border-color: var(--red-600);
+}
+.field.field-error input:focus,
+.field.field-error select:focus {
+  box-shadow: 0 0 0 3px var(--red-50);
+}
+
+.unit-input { position: relative; }
+.unit-input input { padding-right: 42px; }
+.unit-input .unit {
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gray-400);
+  pointer-events: none;
+}
+
+.hint { font-size: 11.5px; color: var(--gray-400); }
+
+.error-msg {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--red-600);
+  min-height: 0;
+  display: none;
+}
+.field.field-error .error-msg { display: block; }
+
+/* segmented control — muted severity coding */
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.seg-btn {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-600);
+  background: var(--surface);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  padding: 9px 6px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+.seg-btn:hover { border-color: var(--gray-400); color: var(--gray-900); background: var(--gray-25); }
+
+.seg-btn[data-value="Low"].active       { background: var(--gray-100); border-color: var(--gray-400); color: var(--gray-900); }
+.seg-btn[data-value="Medium"].active    { background: var(--blue-50);  border-color: var(--blue-500);  color: var(--blue-700); }
+.seg-btn[data-value="High"].active      { background: var(--amber-50); border-color: var(--amber-600); color: var(--amber-700); }
+.seg-btn[data-value="Very High"].active { background: var(--red-50);   border-color: var(--red-600);   color: var(--red-700); }
+
+/* footer / submit */
+.form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 18px;
+  flex-wrap: wrap;
+}
+
+.api-note {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gray-400);
+  margin: 0;
+}
+.api-note code {
+  background: var(--gray-100);
+  color: var(--gray-600);
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.submit-btn {
+  position: relative;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
+  background: var(--blue-500);
+  border: 1px solid var(--blue-600);
+  border-radius: var(--radius-sm);
+  padding: 10px 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  transition: background 0.12s ease, box-shadow 0.12s ease;
+  white-space: nowrap;
+  box-shadow: var(--shadow-xs);
+}
+.submit-btn:hover { background: var(--blue-600); }
+.submit-btn:active { background: var(--blue-700); }
+.submit-btn:disabled { opacity: 0.7; cursor: progress; }
+
+.btn-spinner {
+  display: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
+  animation: spin 0.7s linear infinite;
+}
+.submit-btn.loading .btn-label { opacity: 0.9; }
+.submit-btn.loading .btn-spinner { display: inline-block; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* =========================================================
+   RESULT PANEL
+   ========================================================= */
+.result-inner {
+  padding: 32px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  min-height: 420px;
+  justify-content: center;
+}
+
+.state { width: 100%; display: flex; flex-direction: column; align-items: center; }
+
+.gauge { width: 100%; max-width: 220px; overflow: visible; margin-bottom: 6px; }
+.gauge-track { fill: none; stroke: var(--gray-150); stroke-width: 10; stroke-linecap: round; }
+.gauge-fill {
+  fill: none;
+  stroke: var(--blue-500);
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 314;
+  stroke-dashoffset: 314;
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.22, 1, 0.36, 1), stroke 0.3s ease;
+}
+.gauge-ticks { color: var(--gray-300); }
+
+.idle-label {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--gray-900);
+  margin: 10px 0 4px;
+}
+.idle-copy {
+  font-size: 13px;
+  color: var(--gray-500);
+  max-width: 230px;
+  margin: 0;
+}
+
+/* loading */
+.state-loading { padding: 12px 0; }
+.pulse-ring {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid var(--gray-150);
+  border-top-color: var(--blue-500);
+  animation: spin-slow 0.9s linear infinite;
+  margin-bottom: 18px;
+}
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+.loading-label {
+  font-weight: 700;
+  font-size: 15px;
+  margin: 0 0 4px;
+  color: var(--gray-900);
+}
+.loading-copy { font-size: 12.5px; color: var(--gray-500); margin: 0; }
+
+/* result */
+.score-readout { display: flex; align-items: baseline; gap: 3px; margin-top: 4px; }
+.score-number {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 44px;
+  color: var(--gray-900);
+  letter-spacing: -0.01em;
+}
+.score-max { font-family: var(--font-mono); font-size: 14px; color: var(--gray-400); }
+
+.score-band {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 100px;
+  margin: 10px 0 12px;
+  color: var(--blue-700);
+  background: var(--blue-50);
+}
+.score-band::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+.score-context {
+  font-size: 13px;
+  color: var(--gray-500);
+  max-width: 250px;
+  margin: 0 0 20px;
+}
+
+.reset-btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--gray-700);
+  background: var(--surface);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+.reset-btn:hover { background: var(--gray-50); border-color: var(--gray-400); }
+
+/* error state */
+.state-error { padding: 12px 0; }
+.error-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--red-50);
+  color: var(--red-600);
+  border: 1px solid var(--red-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 14px;
+}
+.error-label { font-weight: 700; font-size: 15px; margin: 0 0 6px; color: var(--gray-900); }
+.error-copy { font-size: 13px; color: var(--gray-500); max-width: 250px; margin: 0 0 20px; }
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+.site-footer p {
+  font-size: 12px;
+  color: var(--gray-400);
+  text-align: center;
+  margin: 0;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 920px) {
+  .layout { grid-template-columns: 1fr; }
+  .result-panel { position: static; }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .site-header { padding: 40px 16px 22px; }
+  .header-inner { flex-direction: column; align-items: stretch; }
+  .theme-toggle { align-self: flex-start; }
+  .layout { padding: 24px 16px 32px; gap: 14px; }
+  .form-body { padding: 4px 18px 20px; }
+  .panel-head { padding: 16px 18px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .segmented { grid-template-columns: repeat(2, 1fr); }
+  .form-footer { flex-direction: column; align-items: stretch; gap: 12px; }
+  .submit-btn { justify-content: center; }
+  .api-note { text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-text">
+      <span class="eyebrow">Student Wellness Analytics</span>
+      <h1 class="title">Mental Health <em>Signal</em></h1>
+      <p class="subtitle">A quick read on how habits, screen time, and stress are trending — modeled from your daily rhythm, not a diagnosis.</p>
+    </div>
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" aria-label="Toggle dark mode">
+      <span class="theme-toggle-icon">🌙</span>
+      <span class="theme-toggle-label">Dark mode</span>
+    </button>
+  </div>
+</header>
+
+<main class="layout">
+
+  <!-- FORM PANEL -->
+  <section class="panel form-panel" aria-labelledby="form-heading">
+    <div class="panel-head">
+      <h2 id="form-heading">Daily rhythm</h2>
+      <span>3 sections</span>
+    </div>
+
+    <form id="predict-form" novalidate class="form-body">
+
+      <fieldset class="group">
+        <legend><span class="legend-index">01</span> Profile</legend>
+        <div class="grid grid-3">
+          <div class="field">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" min="10" max="100" step="1" required placeholder="e.g. 21" />
+            <span class="hint">10–100</span>
+            <span class="error-msg" data-for="age"></span>
+          </div>
+          <div class="field">
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+              <option value="" disabled selected hidden>Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <span class="error-msg" data-for="gender"></span>
+          </div>
+          <div class="field">
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" list="country-list" required placeholder="e.g. India" autocomplete="off" />
+            <datalist id="country-list">
+              <option value="India"></option>
+              <option value="USA"></option>
+              <option value="Canada"></option>
+              <option value="Australia"></option>
+              <option value="UK"></option>
+              <option value="Germany"></option>
+              <option value="Mexico"></option>
+              <option value="Turkey"></option>
+              <option value="France"></option>
+            </datalist>
+            <span class="hint">Not listed? Type it anyway.</span>
+            <span class="error-msg" data-for="country"></span>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend><span class="legend-index">02</span> Academic &amp; Digital Habits</legend>
+        <div class="grid grid-2">
+          <div class="field">
+            <label for="academic_level">Academic level</label>
+            <select id="academic_level" name="academic_level" required>
+              <option value="" disabled selected hidden>Select</option>
+              <option value="High School">High School</option>
+              <option value="Undergraduate">Undergraduate</option>
+              <option value="Graduate">Graduate</option>
+            </select>
+            <span class="error-msg" data-for="academic_level"></span>
+          </div>
+          <div class="field">
+            <label for="most_used_platform">Most-used platform</label>
+            <select id="most_used_platform" name="most_used_platform" required>
+              <option value="" disabled selected hidden>Select</option>
+              <option value="Facebook">Facebook</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Snapchat">Snapchat</option>
+              <option value="Twitter">Twitter</option>
+              <option value="YouTube">YouTube</option>
+              <option value="TikTok">TikTok</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="LINE">LINE</option>
+              <option value="KakaoTalk">KakaoTalk</option>
+              <option value="VKontakte">VKontakte</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="WeChat">WeChat</option>
+            </select>
+            <span class="error-msg" data-for="most_used_platform"></span>
+          </div>
+          <div class="field">
+            <label for="purpose_of_use">Primary purpose</label>
+            <select id="purpose_of_use" name="purpose_of_use" required>
+              <option value="" disabled selected hidden>Select</option>
+              <option value="Networking">Networking</option>
+              <option value="Education">Education</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="News">News</option>
+            </select>
+            <span class="error-msg" data-for="purpose_of_use"></span>
+          </div>
+          <div class="field">
+            <label for="avg_daily_usage_hours">Avg. daily screen time</label>
+            <div class="unit-input">
+              <input type="number" id="avg_daily_usage_hours" name="avg_daily_usage_hours" min="0" max="24" step="0.1" required placeholder="0.0" />
+              <span class="unit">hrs</span>
+            </div>
+            <span class="error-msg" data-for="avg_daily_usage_hours"></span>
+          </div>
+          <div class="field">
+            <label for="daily_unlocks">Daily phone unlocks</label>
+            <input type="number" id="daily_unlocks" name="daily_unlocks" min="0" step="1" required placeholder="e.g. 60" />
+            <span class="error-msg" data-for="daily_unlocks"></span>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend><span class="legend-index">03</span> Lifestyle &amp; Stress</legend>
+        <div class="grid grid-3">
+          <div class="field">
+            <label for="study_hours">Study hours / day</label>
+            <div class="unit-input">
+              <input type="number" id="study_hours" name="study_hours" min="0" max="24" step="0.1" required placeholder="0.0" />
+              <span class="unit">hrs</span>
+            </div>
+            <span class="error-msg" data-for="study_hours"></span>
+          </div>
+          <div class="field">
+            <label for="physical_activity_hours">Physical activity / day</label>
+            <div class="unit-input">
+              <input type="number" id="physical_activity_hours" name="physical_activity_hours" min="0" max="24" step="0.1" required placeholder="0.0" />
+              <span class="unit">hrs</span>
+            </div>
+            <span class="error-msg" data-for="physical_activity_hours"></span>
+          </div>
+          <div class="field">
+            <label for="sleep_hours_per_night">Sleep / night</label>
+            <div class="unit-input">
+              <input type="number" id="sleep_hours_per_night" name="sleep_hours_per_night" min="0" max="24" step="0.1" required placeholder="0.0" />
+              <span class="unit">hrs</span>
+            </div>
+            <span class="error-msg" data-for="sleep_hours_per_night"></span>
+          </div>
+          <div class="field field-span">
+            <label for="stress_level">Perceived stress level</label>
+            <div class="segmented" id="stress_level_group" data-name="stress_level" role="group" aria-label="Perceived stress level">
+              <button type="button" class="seg-btn" data-value="Low" aria-pressed="false">Low</button>
+              <button type="button" class="seg-btn" data-value="Medium" aria-pressed="false">Medium</button>
+              <button type="button" class="seg-btn" data-value="High" aria-pressed="false">High</button>
+              <button type="button" class="seg-btn" data-value="Very High" aria-pressed="false">Very High</button>
+            </div>
+            <input type="hidden" id="stress_level" name="stress_level" required />
+            <span class="error-msg" data-for="stress_level"></span>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="form-footer">
+        <button type="submit" class="submit-btn" id="submit-btn">
+          <span class="btn-label">Read my signal</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+        <p class="api-note">endpoint: <code>POST /predict</code></p>
+      </div>
+    </form>
+  </section>
+
+  <!-- RESULT PANEL -->
+  <aside class="panel result-panel" aria-live="polite">
+    <div class="panel-head">
+      <h2>Result</h2>
+      <span>score / 10</span>
+    </div>
+
+    <div class="result-inner" id="result-inner">
+
+      <div class="state state-idle" id="state-idle">
+        <svg class="gauge gauge-idle" viewBox="0 0 240 160" aria-hidden="true">
+          <path class="gauge-track" d="M 30 140 A 100 100 0 0 1 210 140" />
+          <g class="gauge-ticks"></g>
+        </svg>
+        <p class="idle-label">Your score will appear here</p>
+        <p class="idle-copy">Fill in the form and submit to generate a predicted mental health score from 0–10.</p>
+      </div>
+
+      <div class="state state-loading" id="state-loading" hidden>
+        <div class="pulse-ring"></div>
+        <p class="loading-label">Reading the signal…</p>
+        <p class="loading-copy">Running your habits through the model.</p>
+      </div>
+
+      <div class="state state-result" id="state-result" hidden>
+        <svg class="gauge gauge-result" viewBox="0 0 240 160" aria-hidden="true">
+          <path class="gauge-track" d="M 30 140 A 100 100 0 0 1 210 140" />
+          <path class="gauge-fill" id="gauge-fill" d="M 30 140 A 100 100 0 0 1 210 140" />
+          <g class="gauge-ticks"></g>
+        </svg>
+        <div class="score-readout">
+          <span class="score-number" id="score-number">0.0</span>
+          <span class="score-max">/10</span>
+        </div>
+        <p class="score-band" id="score-band">—</p>
+        <p class="score-context" id="score-context"></p>
+        <button type="button" class="reset-btn" id="reset-btn">Run another read</button>
+      </div>
+
+      <div class="state state-error" id="state-error" hidden>
+        <div class="error-icon" aria-hidden="true">!</div>
+        <p class="error-label" id="error-label">Signal lost</p>
+        <p class="error-copy" id="error-copy"></p>
+        <button type="button" class="reset-btn" id="error-retry-btn">Try again</button>
+      </div>
+
+    </div>
+  </aside>
+
+</main>
+
+<footer class="site-footer">
+  <p>Built for informational purposes only — this is not a clinical assessment. If you're struggling, please talk to someone you trust.</p>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+
+  // FIXED: Changed from https to http. Local Uvicorn servers run on HTTP by default.
+  const API_BASE = "http://127.0.0.1:8000";
+
+  const form = document.getElementById("predict-form");
+  const submitBtn = document.getElementById("submit-btn");
+  const resetBtn = document.getElementById("reset-btn");
+  const errorRetryBtn = document.getElementById("error-retry-btn");
+
+  const stateIdle = document.getElementById("state-idle");
+  const stateLoading = document.getElementById("state-loading");
+  const stateResult = document.getElementById("state-result");
+  const stateError = document.getElementById("state-error");
+
+  const scoreNumberEl = document.getElementById("score-number");
+  const scoreBandEl = document.getElementById("score-band");
+  const scoreContextEl = document.getElementById("score-context");
+  const gaugeFill = document.getElementById("gauge-fill");
+  const errorLabelEl = document.getElementById("error-label");
+  const errorCopyEl = document.getElementById("error-copy");
+
+  const GAUGE_ARC_LENGTH = 314; // approx pi * r(100)
+
+  // ---------------------------------------------------------
+  // Draw tick marks on both gauges (0..10, every 2 units)
+  // ---------------------------------------------------------
+  function drawTicks() {
+    document.querySelectorAll(".gauge-ticks").forEach((g) => {
+      g.innerHTML = "";
+      const cx = 120, cy = 140, rOuter = 100, rInner = 90;
+      for (let i = 0; i <= 10; i += 2) {
+        const angle = Math.PI - (i / 10) * Math.PI; // 180deg -> 0deg
+        const x1 = cx + rOuter * Math.cos(angle);
+        const y1 = cy - rOuter * Math.sin(angle);
+        const x2 = cx + rInner * Math.cos(angle);
+        const y2 = cy - rInner * Math.sin(angle);
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", x1.toFixed(1));
+        line.setAttribute("y1", y1.toFixed(1));
+        line.setAttribute("x2", x2.toFixed(1));
+        line.setAttribute("y2", y2.toFixed(1));
+        line.setAttribute("stroke", "currentColor"); // was: rgba(255,255,255,0.3) — fixed so ticks stay visible in both themes
+        line.setAttribute("stroke-width", "1.5");
+        g.appendChild(line);
+      }
+    });
+  }
+  drawTicks();
+
+  // ---------------------------------------------------------
+  // Segmented control (stress_level) wiring
+  // ---------------------------------------------------------
+  const segGroup = document.getElementById("stress_level_group");
+  const stressHiddenInput = document.getElementById("stress_level");
+
+  if (segGroup && stressHiddenInput) {
+    segGroup.querySelectorAll(".seg-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        segGroup.querySelectorAll(".seg-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        stressHiddenInput.value = btn.dataset.value; // Maps exactly to 'Low', 'Medium', 'High', 'Very High'
+        clearFieldError(stressHiddenInput);
+      });
+    });
+  }
+
+  // ---------------------------------------------------------
+  // Field-level error helpers
+  // ---------------------------------------------------------
+  function fieldWrapper(input) {
+    return input.closest(".field");
+  }
+
+  function setFieldError(input, message) {
+    const wrap = fieldWrapper(input);
+    if (!wrap) return;
+    wrap.classList.add("field-error");
+    const msgEl = wrap.querySelector(".error-msg");
+    if (msgEl) msgEl.textContent = message;
+  }
+
+  function clearFieldError(input) {
+    const wrap = fieldWrapper(input);
+    if (!wrap) return;
+    wrap.classList.remove("field-error");
+    const msgEl = wrap.querySelector(".error-msg");
+    if (msgEl) msgEl.textContent = "";
+  }
+
+  function clearAllErrors() {
+    form.querySelectorAll(".field").forEach((f) => f.classList.remove("field-error"));
+    form.querySelectorAll(".error-msg").forEach((m) => (m.textContent = ""));
+  }
+
+  // ---------------------------------------------------------
+  // Client-side validation mirroring the StudentData model
+  // ---------------------------------------------------------
+  function validate(payload) {
+    const errors = [];
+
+    const numericChecks = [
+      ["age", 10, 100],
+      ["avg_daily_usage_hours", 0, 24],
+      ["daily_unlocks", 0, Infinity],
+      ["study_hours", 0, 24],
+      ["physical_activity_hours", 0, 24],
+      ["sleep_hours_per_night", 0, 24],
+    ];
+
+    numericChecks.forEach(([key, min, max]) => {
+      const input = document.getElementById(key);
+      const val = payload[key];
+      if (val === "" || val === null || Number.isNaN(val)) {
+        errors.push([input, "This field is required."]);
+      } else if (val < min || val > max) {
+        errors.push([input, `Must be between ${min} and ${max === Infinity ? "0+" : max}.`]);
+      }
+    });
+
+    ["gender", "country", "academic_level", "most_used_platform", "purpose_of_use"].forEach((key) => {
+      const input = document.getElementById(key);
+      if (!payload[key] || String(payload[key]).trim() === "") {
+        errors.push([input, "This field is required."]);
+      }
+    });
+
+    if (!payload.stress_level) {
+      errors.push([stressHiddenInput, "Pick a stress level."]);
+    }
+
+    return errors;
+  }
+
+  // ---------------------------------------------------------
+  // Gather form data into the exact StudentData shape
+  // ---------------------------------------------------------
+  function collectPayload() {
+    const fd = new FormData(form);
+
+    // The keys map exactly 1:1 with the FastAPI `StudentData` Pydantic model
+    return {
+      age: fd.get("age") === "" ? NaN : parseInt(fd.get("age"), 10),
+      gender: fd.get("gender") || "",
+      country: (fd.get("country") || "").trim(),
+      academic_level: fd.get("academic_level") || "",
+      most_used_platform: fd.get("most_used_platform") || "",
+      purpose_of_use: fd.get("purpose_of_use") || "",
+      avg_daily_usage_hours: fd.get("avg_daily_usage_hours") === "" ? NaN : parseFloat(fd.get("avg_daily_usage_hours")),
+      daily_unlocks: fd.get("daily_unlocks") === "" ? NaN : parseInt(fd.get("daily_unlocks"), 10),
+      study_hours: fd.get("study_hours") === "" ? NaN : parseFloat(fd.get("study_hours")),
+      physical_activity_hours: fd.get("physical_activity_hours") === "" ? NaN : parseFloat(fd.get("physical_activity_hours")),
+      sleep_hours_per_night: fd.get("sleep_hours_per_night") === "" ? NaN : parseFloat(fd.get("sleep_hours_per_night")),
+      stress_level: fd.get("stress_level") || "",
+    };
+  }
+
+  // ---------------------------------------------------------
+  // UI state switching
+  // ---------------------------------------------------------
+  function showState(name) {
+    [stateIdle, stateLoading, stateResult, stateError].forEach((el) => (el.hidden = true));
+    ({ idle: stateIdle, loading: stateLoading, result: stateResult, error: stateError }[name]).hidden = false;
+  }
+
+  function setSubmitting(isSubmitting) {
+    submitBtn.disabled = isSubmitting;
+    submitBtn.classList.toggle("loading", isSubmitting);
+  }
+
+  function bandFor(score) {
+    if (score < 4) {
+      return {
+        label: "Signal: strained",
+        context: "Your responses suggest elevated strain right now. Small shifts in sleep or screen time can go a long way.",
+      };
+    }
+    if (score < 7) {
+      return {
+        label: "Signal: balanced",
+        context: "Your rhythm looks fairly steady, with some room to recover and reset.",
+      };
+    }
+    return {
+      label: "Signal: strong",
+      context: "Your habits point to a well-supported, resilient baseline. Keep it up.",
+    };
+  }
+
+  function renderResult(score) {
+    const clamped = Math.max(0, Math.min(10, score));
+    const { label, context } = bandFor(clamped);
+
+    scoreNumberEl.textContent = score.toFixed(2);
+    scoreBandEl.textContent = label;
+    scoreContextEl.textContent = context;
+
+    // reset then animate the arc fill on next frame
+    gaugeFill.style.transition = "none";
+    gaugeFill.style.strokeDashoffset = String(GAUGE_ARC_LENGTH);
+    requestAnimationFrame(() => {
+      gaugeFill.style.transition = "";
+      const offset = GAUGE_ARC_LENGTH * (1 - clamped / 10);
+      gaugeFill.style.strokeDashoffset = String(offset);
+    });
+
+    showState("result");
+  }
+
+  function renderError(label, copy) {
+    errorLabelEl.textContent = label;
+    errorCopyEl.textContent = copy;
+    showState("error");
+  }
+
+  // ---------------------------------------------------------
+  // Parse FastAPI / Pydantic 422 error responses into
+  // field-level messages where possible
+  // ---------------------------------------------------------
+  function applyServerValidationErrors(detail) {
+    if (!Array.isArray(detail)) return false;
+    let matched = false;
+    detail.forEach((err) => {
+      // Pydantic format is usually: { loc: ["body", "age"], msg: "...", type: "..." }
+      const field = Array.isArray(err.loc) ? err.loc[err.loc.length - 1] : null;
+      const input = field ? document.getElementById(field) : null;
+      const target = field === "stress_level" ? stressHiddenInput : input;
+      if (target) {
+        setFieldError(target, err.msg || "Invalid value.");
+        matched = true;
+      }
+    });
+    return matched;
+  }
+
+  // ---------------------------------------------------------
+  // Submit handler
+  // ---------------------------------------------------------
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    clearAllErrors();
+
+    const payload = collectPayload();
+    const clientErrors = validate(payload);
+
+    if (clientErrors.length > 0) {
+      clientErrors.forEach(([input, msg]) => input && setFieldError(input, msg));
+      clientErrors[0][0]?.focus?.();
+      return;
+    }
+
+    setSubmitting(true);
+    showState("loading");
+
+    try {
+      const res = await fetch(`${API_BASE}/predict`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.status === 422) {
+        const body = await res.json().catch(() => null);
+        const matched = body && applyServerValidationErrors(body.detail);
+        renderError(
+          "Check your inputs",
+          matched
+            ? "The API rejected a few fields — details are marked on the form."
+            : "The API rejected this submission. Please review your inputs and try again."
+        );
+        return;
+      }
+
+      if (!res.ok) {
+        let detailMsg = `The API responded with status ${res.status}.`;
+        const body = await res.json().catch(() => null);
+        if (body && typeof body.detail === "string") detailMsg = body.detail;
+        renderError("Prediction failed", detailMsg);
+        return;
+      }
+
+      const data = await res.json();
+
+      // Checking for the exact response dict mapping returned by your FastAPI backend
+      if (typeof data.predicted_mental_health_score !== "number") {
+        renderError("Unexpected response", "The API responded, but the score was missing or malformed.");
+        return;
+      }
+
+      renderResult(data.predicted_mental_health_score);
+    } catch (err) {
+      renderError(
+        "Can't reach the server",
+        `Couldn't connect to ${API_BASE}. Make sure the backend is running (uvicorn main:app --reload) and reachable from this page.`
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  });
+
+  // live-clear errors as the user edits
+  form.querySelectorAll("input, select").forEach((el) => {
+    el.addEventListener("input", () => clearFieldError(el));
+    el.addEventListener("change", () => clearFieldError(el));
+  });
+
+  resetBtn.addEventListener("click", () => {
+    showState("idle");
+    form.reset(); // Optionally clear the form upon running another read
+    segGroup.querySelectorAll(".seg-btn").forEach((b) => b.classList.remove("active"));
+    stressHiddenInput.value = "";
+  });
+
+  errorRetryBtn.addEventListener("click", () => {
+    showState("idle");
+  });
+})();
+</script>
+
+<script>
+// ---------------------------------------------------------
+// Dark mode toggle — separate from the app logic above.
+// In-memory only (no localStorage: not supported inside the
+// Claude artifact sandbox). Defaults to system preference.
+// ---------------------------------------------------------
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  const toggle = document.getElementById("theme-toggle");
+  const icon = toggle.querySelector(".theme-toggle-icon");
+  const label = toggle.querySelector(".theme-toggle-label");
+
+  let isDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  function apply() {
+    root.setAttribute("data-theme", isDark ? "dark" : "light");
+    toggle.setAttribute("aria-pressed", String(isDark));
+    icon.textContent = isDark ? "☀️" : "🌙";
+    label.textContent = isDark ? "Light mode" : "Dark mode";
+  }
+
+  toggle.addEventListener("click", () => {
+    isDark = !isDark;
+    apply();
+  });
+
+  apply();
+})();
+</script>
+
+</body>
+</html>

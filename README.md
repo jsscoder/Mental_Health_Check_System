@@ -44,7 +44,7 @@ Built with a lightning-fast **FastAPI** backend and a responsive, vanilla **HTML
 └── README.md                        # Project documentation
 💻 Local Development Setup
 We recommend using uv for blazing-fast environment management, but standard pip works too.
-
+```
 1. Clone the repository
 Bash
 git clone [https://github.com/yourusername/mental-health-signal.git](https://github.com/yourusername/mental-health-signal.git)
